@@ -955,10 +955,10 @@
             left: 0;
         }
         #dino-player {
-            width: 40px; /* Hitbox width */
-            height: 44px; /* Hitbox height */
+            width: 40px; 
+            height: 44px;
             position: absolute;
-            bottom: 21px; /* on top of ground */
+            bottom: 21px;
             left: 20px;
         }
         .dino-obstacle {
@@ -977,9 +977,8 @@
 
     <canvas id="singularity"></canvas>
 
-    <!-- Desktop Icons -->
     <div id="desktop-icons">
-        <!-- Icon Gradient Definition -->
+        
         <svg width="0" height="0" style="position:absolute">
             <defs>
                 <linearGradient id="icon-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -1037,7 +1036,7 @@
 
     <div id="pulse-wave"></div>
 
-    <!-- The Forge (Terminal) -->
+   
     <div class="window hidden" id="forge-window" style="top: 20%; left: 25%;">
         <div class="window-header">
             <span class="window-title">The Forge</span>
@@ -1062,7 +1061,7 @@
         </div>
     </div>
 
-    <!-- The Archives (File Manager) -->
+   
     <div class="window hidden" id="archives-window" style="top: 30%; left: 40%; width: 550px; height: 400px;">
         <div class="window-header">
             <span class="window-title">The Archives</span>
@@ -1083,7 +1082,7 @@
         </div>
     </div>
 
-    <!-- About Me Window -->
+   
     <div class="window hidden" id="about-window" style="top: 25%; left: 35%; width: 450px; height: 300px;">
         <div class="window-header">
             <span class="window-title">About Me</span>
@@ -1100,7 +1099,7 @@
         </div>
     </div>
 
-    <!-- Browser Window -->
+
     <div class="window hidden" id="browser-window" style="top: 10%; left: 10%; width: 80vw; height: 80vh;">
         <div class="window-header">
             <span class="window-title">Browser</span>
@@ -1115,7 +1114,7 @@
         </div>
     </div>
 
-    <!-- Neon Block Blast Game -->
+   
     <div class="window hidden" id="game-window" style="top: 5%; left: 25%; width: 380px; height: 650px;">
         <div class="window-header">
             <span class="window-title">Neon Block Blast</span>
@@ -1143,10 +1142,10 @@
         </div>
     </div>
 
-    <!-- Game Drag Proxy -->
+ 
     <div id="game-drag-proxy" class="shape"></div>
 
-    <!-- The Abacus (Calculator) -->
+
     <div class="window hidden" id="abacus-window" style="top: 15%; left: 60%; width: 320px; height: 450px;">
         <div class="window-header">
             <span class="window-title">The Abacus</span>
@@ -1187,7 +1186,7 @@
         </div>
     </div>
 
-    <!-- The Scribe (Notes) -->
+ 
     <div class="window hidden" id="notes-window" style="top: 25%; left: 35%; width: 400px; height: 500px;">
         <div class="window-header">
             <span class="window-title">The Scribe</span>
@@ -1209,7 +1208,7 @@
         </div>
     </div>
 
-    <!-- The Easel (Paint App) -->
+ 
     <div class="window hidden" id="easel-window" style="top: 10%; left: 15%; width: 600px; height: 500px;">
         <div class="window-header">
             <span class="window-title">The Easel</span>
@@ -1234,7 +1233,6 @@
         </div>
     </div>
 
-    <!-- Settings Window -->
     <div class="window hidden" id="settings-window" style="top: 20%; left: 30%; width: 450px; height: 350px;">
         <div class="window-header">
             <span class="window-title">Settings</span>
@@ -1284,7 +1282,7 @@
         </div>
     </div>
 
-    <!-- System Monitor -->
+
     <div class="window hidden" id="system-monitor-window" style="top: 15%; left: 20%; width: 500px; height: 400px;">
         <div class="window-header">
             <span class="window-title">System Monitor</span>
@@ -1306,7 +1304,7 @@
         </div>
     </div>
 
-    <!-- Knight Menu -->
+   
     <div id="knight-menu">
         <div class="menu-item" data-opens="settings-window">
             <span class="menu-title">Settings</span>
@@ -1342,7 +1340,7 @@
         </div>
     </div>
 
-    <!-- The Horizon -->
+ 
     <div id="horizon">
         <div style="display: flex; align-items: center;">
             <div id="knight-crest">K</div>
@@ -1389,7 +1387,7 @@
         </div>
     </div>
 
-    <!-- Context Menu -->
+    
     <div id="context-menu">
         <div class="ctx-item" onclick="ctxAction('view')"><span>👁️</span> View</div>
         <div class="ctx-item" onclick="ctxAction('refresh')"><span>🔄</span> Refresh</div>
@@ -1401,7 +1399,7 @@
     </div>
 
     <script>
-        // --- The Singularity (Black Hole Animation) ---
+       
         const canvas = document.getElementById('singularity');
         const ctx = canvas.getContext('2d');
         
@@ -1409,12 +1407,12 @@
         let diskRotation = 0;
         let animationEnabled = false;
         let animationFrameId;
-        let currentAnimationType = 'singularity'; // 'singularity' or 'starfield'
+        let currentAnimationType = 'singularity'; 
         let trailColor;
         const singularityStars = [];
         const starfieldStars = [];
         const STAR_COUNT = 400;
-        const COLORS = ['#C5A059', '#8A2BE2', '#ffffff']; // Gold, Violet, White
+        const COLORS = ['#C5A059', '#8A2BE2', '#ffffff'];
 
         function resize() {
             width = canvas.width = window.innerWidth;
@@ -1440,7 +1438,6 @@
                 this.color = COLORS[Math.floor(Math.random() * COLORS.length)];
                 this.size = Math.random() * 1.5;
                 
-                // Velocity towards center
                 const angle = Math.atan2(cy - this.y, cx - this.x);
                 const speed = 0.5 + Math.random();
                 this.vx = Math.cos(angle) * speed;
@@ -1453,13 +1450,13 @@
                 const distSq = dx*dx + dy*dy;
                 const dist = Math.sqrt(distSq);
                 
-                // Gravitational pull towards center (spaghettification)
+               
                 const pull = 500 / (dist + 1); 
                 this.vx += (dx / dist) * pull * 0.05;
                 this.vy += (dy / dist) * pull * 0.05;
 
-                // Rotational force (orbital velocity)
-                if (dist > 30) { // Only apply rotation outside the event horizon
+               
+                if (dist > 30) { 
                     const rotationalForce = 150 / (dist + 1) * 0.05;
                     this.vx += (-dy / dist) * rotationalForce;
                     this.vy += (dx / dist) * rotationalForce;
@@ -1468,9 +1465,9 @@
                 this.x += this.vx;
                 this.y += this.vy;
 
-                // Reset if sucked in (too close to center)
+                
                 if (dist < 20 || this.x < 0 || this.x > width || this.y < 0 || this.y > height) {
-                    // Respawn at edges
+                    
                     if (Math.random() > 0.5) {
                         this.x = Math.random() > 0.5 ? 0 : width;
                         this.y = Math.random() * height;
@@ -1478,7 +1475,7 @@
                         this.x = Math.random() * width;
                         this.y = Math.random() > 0.5 ? 0 : height;
                     }
-                    // Reset velocity
+                    
                     const angle = Math.atan2(cy - this.y, cx - this.x);
                     this.vx = Math.cos(angle) * 0.5;
                     this.vy = Math.sin(angle) * 0.5;
@@ -1492,7 +1489,7 @@
                 ctx.strokeStyle = this.color;
                 ctx.lineWidth = this.size;
                 
-                // Spaghettification visual: Stretch into lines near center
+               
                 if (dist < 300) {
                     const stretchFactor = (300 - dist) / 5;
                     ctx.moveTo(this.x, this.y);
@@ -1510,15 +1507,15 @@
             constructor() {
                 this.x = Math.random() * width;
                 this.y = Math.random() * height;
-                this.speed = 0.5 + Math.random() * 1.5; // Different speeds for parallax
-                this.size = this.speed; // Larger stars move faster
+                this.speed = 0.5 + Math.random() * 1.5;
+                this.size = this.speed;
             }
 
             update() {
                 this.x += this.speed;
                 if (this.x > width) {
                     this.x = 0;
-                    this.y = Math.random() * height; // Re-randomize y for variety
+                    this.y = Math.random() * height; 
                 }
             }
 
@@ -1528,7 +1525,7 @@
             }
         }
 
-        // Initialize both sets of stars
+        
         for(let i=0; i<STAR_COUNT; i++) singularityStars.push(new SingularityStar());
         for(let i=0; i<STAR_COUNT; i++) starfieldStars.push(new StarfieldStar());
 
@@ -1542,11 +1539,11 @@
         }
 
         function animateSingularity() {
-            // Trail effect for motion blur
+        
             ctx.fillStyle = trailColor || 'rgba(2, 2, 2, 0.2)';
             ctx.fillRect(0, 0, width, height);
 
-            // --- Draw Accretion Disk ---
+            
             ctx.save();
             ctx.translate(cx, cy);
             ctx.rotate(diskRotation);

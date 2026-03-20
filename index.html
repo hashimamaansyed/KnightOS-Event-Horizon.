@@ -1549,10 +1549,10 @@
             ctx.rotate(diskRotation);
 
             const gradient = ctx.createRadialGradient(0, 0, 40, 0, 0, 120);
-            gradient.addColorStop(0, 'rgba(0,0,0,0)'); // Transparent center
-            gradient.addColorStop(0.5, 'rgba(197, 160, 89, 0.5)'); // Glowing gold
-            gradient.addColorStop(0.8, 'rgba(138, 43, 226, 0.3)'); // Hint of violet
-            gradient.addColorStop(1, 'rgba(10, 11, 30, 0)'); // Fade to space
+            gradient.addColorStop(0, 'rgba(0,0,0,0)'); 
+            gradient.addColorStop(0.5, 'rgba(197, 160, 89, 0.5)'); 
+            gradient.addColorStop(0.8, 'rgba(138, 43, 226, 0.3)'); 
+            gradient.addColorStop(1, 'rgba(10, 11, 30, 0)');
             
             ctx.beginPath();
             ctx.arc(0, 0, 120, 0, Math.PI * 2);
@@ -1560,9 +1560,9 @@
             ctx.fill();
             
             ctx.restore();
-            diskRotation += 0.002; // Slow rotation
+            diskRotation += 0.002; 
 
-            // Draw Black Hole Event Horizon
+            
             ctx.beginPath();
             ctx.arc(cx, cy, 30, 0, Math.PI * 2);
             ctx.fillStyle = '#000';
@@ -1577,7 +1577,7 @@
         function animationLoop() {
             if (currentAnimationType === 'singularity') {
                 animateSingularity();
-            } else { // starfield
+            } else {
                 animateStarfield();
             }
 
@@ -1586,15 +1586,13 @@
             }
         }
 
-        // --- System Logic ---
-
-        // Minimize All Button
+     
         const minimizeAllBtn = document.getElementById('minimize-all-btn');
         minimizeAllBtn.addEventListener('click', () => {
             document.querySelectorAll('.window:not(.hidden)').forEach(win => win.classList.add('hidden'));
         });
 
-        // Clock
+      
         function updateClock() {
             const now = new Date();
             const timeString = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
@@ -1606,7 +1604,7 @@
         setInterval(updateClock, 1000);
         updateClock();
 
-        // Start Menu Toggle
+        
         const startBtn = document.getElementById('knight-crest');
         const menu = document.getElementById('knight-menu');
         let menuOpen = false;
@@ -1624,9 +1622,9 @@
             }
         });
 
-        // --- Window Management ---
+       
         let highestZ = 101;
-        const windows = document.querySelectorAll('.window'); // Keep for dragging logic
+        const windows = document.querySelectorAll('.window'); 
 
         function focusWindow(windowEl) {
             if (!windowEl) return;
@@ -1669,18 +1667,15 @@
             const onMouseDown = (e) => {
                 if (e.target.classList.contains('win-btn')) return;
 
-                // If window is snapped or maximized, restore it before dragging
                 if (windowEl.classList.contains('snapped') || windowEl.classList.contains('maximized')) {
-                    const restoredWidth = windowEl._originalBounds ? windowEl._originalBounds.width : 500; // default
-                    const restoredHeight = windowEl._originalBounds ? windowEl._originalBounds.height : 320; // default
+                    const restoredWidth = windowEl._originalBounds ? windowEl._originalBounds.width : 500; 
+                    const restoredHeight = windowEl._originalBounds ? windowEl._originalBounds.height : 320; 
                     
                     windowEl.classList.remove('snapped', 'maximized');
-                    windowEl.style.transition = ''; // No transition when unsnapping via drag
+                    windowEl.style.transition = ''; 
                     
                     windowEl.style.width = `${restoredWidth}px`;
                     windowEl.style.height = `${restoredHeight}px`;
-
-                    // Center the restored window under the cursor
                     initialLeft = e.clientX - (restoredWidth / 2);
                     initialTop = e.clientY - (header.offsetHeight / 2);
                     windowEl.style.left = `${initialLeft}px`;
@@ -1695,14 +1690,13 @@
                 startX = e.clientX;
                 startY = e.clientY;
                 header.style.cursor = 'grabbing';
-                document.body.style.userSelect = 'none'; // Prevent text selection
+                document.body.style.userSelect = 'none';
             };
 
             const onMouseMove = (e) => {
                 if (!isDragging) return;
                 const dx = e.clientX - startX;
                 const dy = e.clientY - startY;
-                // No transitions while dragging for smoothness
                 windowEl.style.transition = '';
                 windowEl.style.left = `${initialLeft + dx}px`;
                 windowEl.style.top = `${initialTop + dy}px`;
@@ -1717,7 +1711,6 @@
                 const snapThreshold = 10;
                 const horizonHeight = 56;
 
-                // Snap Left
                 if (e.clientX <= snapThreshold) {
                     saveWindowBounds(windowEl);
                     windowEl.classList.add('snapped');
@@ -1728,7 +1721,7 @@
                     windowEl.style.height = `calc(100vh - ${horizonHeight}px)`;
                     setTimeout(() => windowEl.style.transition = '', 200);
                 } 
-                // Snap Right
+                
                 else if (e.clientX >= window.innerWidth - snapThreshold) {
                     saveWindowBounds(windowEl);
                     windowEl.classList.add('snapped');
@@ -1746,7 +1739,6 @@
             document.addEventListener('mouseup', onMouseUp);
             windowEl.addEventListener('mousedown', () => focusWindow(windowEl), true);
 
-            // Double click to maximize/restore
             header.addEventListener('dblclick', () => {
                 if (windowEl.classList.contains('maximized') || windowEl.classList.contains('snapped')) {
                     restoreWindowBounds(windowEl);
@@ -1763,8 +1755,6 @@
                 }
             });
         });
-
-        // --- The Forge (Terminal) Logic ---
         const forgeWindow = document.getElementById('forge-window');
         const forgeContent = document.getElementById('forge-content');
         const terminalMain = document.getElementById('terminal-main');
@@ -1773,7 +1763,7 @@
         const dinoGameContainer = document.getElementById('dino-game-container');
         let isDinoGameActive = false;
 
-        // Focus input when clicking anywhere in the terminal window
+     
         forgeContent.addEventListener('click', (e) => {
             if (!isDinoGameActive && e.target.closest('#terminal-main')) {
                 terminalInput.focus();
@@ -1800,13 +1790,13 @@
                     break;
                 case 'clear':
                     terminalOutput.innerHTML = '';
-                    return; // No output text needed
+                    return; 
                 case 'date':
                     outputText = new Date().toString();
                     break;
                 case 'dino':
                     startDinoGame();
-                    return; // Handled separately
+                    return; 
                 case 'exit':
                     forgeWindow.classList.add('hidden');
                     return;
@@ -1819,7 +1809,7 @@
             terminalOutput.appendChild(outputEl);
         }
 
-        // --- Dino Game Logic ---
+       
         let dinoGameLoopId;
         let dinoPlayer, dinoScoreEl, dinoGameOverEl, dinoFinalScoreEl, dinoGround;
         let playerY, dinoVY, dinoGravity, dinoIsJumping;
@@ -1849,7 +1839,7 @@
             dinoFinalScoreEl = document.getElementById('dino-final-score');
             dinoGround = document.getElementById('dino-ground');
 
-            // Game variables
+           
             playerY = 21;
             dinoVY = 0;
             dinoGravity = 0.6;
@@ -1860,28 +1850,28 @@
             let frameCount = 0;
 
             function dinoGameLoop() {
-                // Update player vertical position
+            
                 playerY -= dinoVY;
                 dinoVY += dinoGravity;
                 
-                if (playerY <= 21) { // Hit the ground
+                if (playerY <= 21) { 
                     playerY = 21;
                     dinoVY = 0;
                     dinoIsJumping = false;
                 }
                 dinoPlayer.style.bottom = `${playerY}px`;
 
-                // Animate dino sprite
+                
                 const frameName = dinoIsJumping ? 'run1' : (Math.floor(dinoScoreCount / 8) % 2 === 0 ? 'run1' : 'run2');
                 drawDino(frameName);
 
-                // Move obstacles
+              
                 dinoObstacles.forEach(obstacle => {
                     let obstacleLeft = parseInt(window.getComputedStyle(obstacle).getPropertyValue('left'));
                     obstacle.style.left = `${obstacleLeft - dinoSpeed}px`;
                 });
 
-                // Remove off-screen obstacles
+              
                 dinoObstacles = dinoObstacles.filter(obstacle => {
                     if (parseInt(obstacle.style.left) < -10) {
                         obstacle.remove();
@@ -1890,7 +1880,6 @@
                     return true;
                 });
 
-                // Spawn new obstacles
                 frameCount++;
                 if (frameCount > 60 && Math.random() < 0.02) {
                     frameCount = 0;
@@ -1901,16 +1890,16 @@
                     dinoObstacles.push(newObstacle);
                 }
 
-                // Update score
+               
                 dinoScoreCount++;
                 dinoScoreEl.textContent = `Score: ${dinoScoreCount}   HI: ${dinoHighScore}`;
 
-                // Increase speed
+             
                 if (dinoScoreCount % 100 === 0) {
                     dinoSpeed += 0.5;
                 }
 
-                // Collision check
+              
                 const playerRect = dinoPlayer.getBoundingClientRect();
                 for (const obstacle of dinoObstacles) {
                     const obstacleRect = obstacle.getBoundingClientRect();
@@ -1919,7 +1908,7 @@
                         playerRect.left < obstacleRect.right &&
                         playerRect.bottom > obstacleRect.top
                     ) {
-                        endDinoGame(true); // Pass true for game over
+                        endDinoGame(true);
                         return;
                     }
                 }

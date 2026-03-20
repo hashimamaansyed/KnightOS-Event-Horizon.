@@ -1953,19 +1953,19 @@
         }
 
         const dinoSprites = {
-            run1: [ // Leg back
-                { x: 18, y: 0, w: 22, h: 18 },  // Head
-                { x: 6, y: 18, w: 24, h: 12 }, // Body
-                { x: 0, y: 30, w: 12, h: 6 },  // Tail
-                { x: 12, y: 30, w: 6, h: 14 }, // Back Leg
-                { x: 24, y: 30, w: 6, h: 8 },  // Front Leg
+            run1: [
+                { x: 18, y: 0, w: 22, h: 18 }, 
+                { x: 6, y: 18, w: 24, h: 12 }, 
+                { x: 0, y: 30, w: 12, h: 6 },  
+                { x: 12, y: 30, w: 6, h: 14 },
+                { x: 24, y: 30, w: 6, h: 8 },  
             ],
-            run2: [ // Leg forward
-                { x: 18, y: 0, w: 22, h: 18 },  // Head
-                { x: 6, y: 18, w: 24, h: 12 }, // Body
-                { x: 0, y: 30, w: 12, h: 6 },  // Tail
-                { x: 12, y: 30, w: 6, h: 8 },  // Back Leg
-                { x: 24, y: 30, w: 6, h: 14 }, // Front Leg
+            run2: [ 
+                { x: 18, y: 0, w: 22, h: 18 }, 
+                { x: 6, y: 18, w: 24, h: 12 }, 
+                { x: 0, y: 30, w: 12, h: 6 },
+                { x: 12, y: 30, w: 6, h: 8 },
+                { x: 24, y: 30, w: 6, h: 14 }, 
             ]
         };
 
@@ -1986,30 +1986,30 @@
             });
         }
 
-        // Global key listener for the game
+        
         document.addEventListener('keydown', (e) => {
             if (isDinoGameActive) {
-                // Game is running
+               
                 if (e.code === 'Space' || e.code === 'ArrowUp') {
                     e.preventDefault();
                     if (!dinoIsJumping) {
-                        dinoVY = -12; // Jump force
+                        dinoVY = -12; 
                         dinoIsJumping = true;
                     }
                 }
             }
-            // Handle escape during game or on game over screen
+   
             if (e.code === 'Escape' && dinoGameContainer.style.display === 'block') {
                 e.preventDefault();
-                endDinoGame(false); // Manually exit
+                endDinoGame(false); 
             }
         });
 
-        // The Pulse
+        
         const pulseWave = document.getElementById('pulse-wave');
         setInterval(() => {
             pulseWave.classList.remove('active');
-            void pulseWave.offsetWidth; // Trigger reflow
+            void pulseWave.offsetWidth; 
             pulseWave.classList.add('active');
         }, 10000);
 
@@ -2284,7 +2284,7 @@
         initializeBlockBlastGame();
 
 
-        // --- The Abacus Logic ---
+
         const abacusDisplay = document.getElementById('abacus-display');
         const abacusHistory = document.getElementById('abacus-history');
 
@@ -2310,7 +2310,7 @@
                     .replace(/÷/g, '/')
                     .replace(/−/g, '-');
 
-                // Basic security check to prevent arbitrary code execution
+               
                 if (/[^0-9+\-*/.() ]/.test(expressionForEval)) {
                     throw new Error("Invalid expression");
                 }
@@ -2323,7 +2323,7 @@
 
                 abacusHistory.innerText = abacusDisplay.value + " =";
                 
-                // Format result to avoid long decimals and display overflow
+            
                 let resultString = String(parseFloat(result.toPrecision(12)));
                 if (resultString.length > 15) {
                     resultString = result.toExponential(8);
@@ -2348,10 +2348,10 @@
             }
         };
 
-        // --- Notes Logic ---
+      
         const notesArea = document.getElementById('notes-area');
 
-        // Load saved notes and color on startup
+      
         if (localStorage.getItem('knightos-notes')) {
             notesArea.value = localStorage.getItem('knightos-notes');
         }        
@@ -2359,7 +2359,6 @@
         if (savedNoteColor) {
             notesArea.style.backgroundColor = savedNoteColor;
         } else { notesArea.style.backgroundColor = 'var(--item-bg)'; }
-        // Save notes on input
         notesArea.addEventListener('input', () => {
             localStorage.setItem('knightos-notes', notesArea.value);
         });
@@ -2367,8 +2366,6 @@
             notesArea.style.backgroundColor = color;
             localStorage.setItem('knightos-notes-color', color);
         };
-
-        // --- The Easel (Paint App) ---
         function initializeEasel() {
             const easelWindow = document.getElementById('easel-window');
             const canvas = document.getElementById('easel-canvas');
@@ -2391,10 +2388,10 @@
                 if (canvas.width > 0 && canvas.height > 0) {
                     historyStack.push(ctx.getImageData(0, 0, canvas.width, canvas.height));
                 }
-                if (historyStack.length > 30) { // Limit history to 30 states
+                if (historyStack.length > 30) {
                     historyStack.shift();
                 }
-                redoStack = []; // Clear redo stack on new action
+                redoStack = [];
             }
 
             function undo() {
@@ -2414,8 +2411,6 @@
             }
 
             function resizeCanvas() {
-                // When the window is resized, the canvas dimensions are updated.
-                // This will clear the canvas, which is acceptable for a simple app.
                 const rect = contentEl.getBoundingClientRect();
                 const toolbarHeight = contentEl.querySelector('.easel-toolbar').offsetHeight;
                 if (rect.width > 0 && rect.height > toolbarHeight) {
@@ -2425,15 +2420,12 @@
                     canvas.height = rect.height - toolbarHeight;
                 }
             }
-
-            // Use ResizeObserver to automatically resize canvas when window size changes.
             const resizeObserver = new ResizeObserver(resizeCanvas);
-            // Start/stop observing based on window visibility to be efficient.
             const mutationObserver = new MutationObserver(() => {
                 if (easelWindow.classList.contains('hidden')) {
                     resizeObserver.unobserve(contentEl);
                 } else {
-                    // Initial resize when window becomes visible
+                 
                     if (canvas.width !== contentEl.getBoundingClientRect().width) {
                         resizeCanvas();
                     }
@@ -2469,26 +2461,18 @@
             redoBtn.addEventListener('click', redo);
 
             clearBtn.addEventListener('click', () => {
-                saveState(); // Make clear action undoable
+                saveState(); 
                 ctx.clearRect(0, 0, canvas.width, canvas.height);
             });
 
             saveBtn.addEventListener('click', () => {
-                // Create a temporary canvas to handle the background color.
-                // The drawing canvas is transparent, but we want to save it with the dark background.
                 const tempCanvas = document.createElement('canvas');
                 tempCanvas.width = canvas.width;
                 tempCanvas.height = canvas.height;
                 const tempCtx = tempCanvas.getContext('2d');
-
-                // The background of the easel content area is #111
                 tempCtx.fillStyle = '#111';
                 tempCtx.fillRect(0, 0, tempCanvas.width, tempCanvas.height);
-
-                // Draw the current canvas content on top of the background
                 tempCtx.drawImage(canvas, 0, 0);
-
-                // Create a link to download the image
                 const link = document.createElement('a');
                 link.download = 'knightos-easel.png';
                 link.href = tempCanvas.toDataURL('image/png');
@@ -2497,7 +2481,7 @@
         }
         initializeEasel();
 
-        // --- System Monitor ---
+    
         function initializeSystemMonitor() {
             const monitorWindow = document.getElementById('system-monitor-window');
             const cpuCanvas = document.getElementById('cpu-canvas');
@@ -2520,7 +2504,7 @@
                     if (rect.width > 0 && rect.height > 0) {
                         canvas.width = rect.width;
                         canvas.height = rect.height;
-                        // Initialize data array to canvas width
+                     
                         const dataArray = canvas === cpuCanvas ? cpuData : ramData;
                         while (dataArray.length < canvas.width) {
                             dataArray.push(0);
@@ -2538,7 +2522,6 @@
                 ctx.lineWidth = 2;
                 ctx.strokeStyle = color;
                 
-                // Draw the line
                 data.forEach((value, index) => {
                     const x = index;
                     const y = canvas.height - (value / 100) * canvas.height;
@@ -2546,8 +2529,6 @@
                     else ctx.lineTo(x, y);
                 });
                 ctx.stroke();
-
-                // Draw the gradient fill
                 const gradient = ctx.createLinearGradient(0, 0, 0, canvas.height);
                 gradient.addColorStop(0, `${color}40`); // Semi-transparent
                 gradient.addColorStop(1, `${color}00`); // Fully transparent
@@ -2562,23 +2543,21 @@
             let lastRamValue = 40 + Math.random() * 10;
 
             function updateMonitor() {
-                // Simulate CPU usage (more volatile)
                 lastCpuValue += (Math.random() - 0.5) * 10;
-                lastCpuValue = Math.max(5, Math.min(95, lastCpuValue)); // Clamp
+                lastCpuValue = Math.max(5, Math.min(95, lastCpuValue)); 
                 cpuData.push(lastCpuValue);
                 if (cpuData.length > cpuCanvas.width) cpuData.shift();
                 cpuLabel.textContent = `${Math.round(lastCpuValue)}%`;
 
-                // Simulate RAM usage (more stable)
                 if (Math.random() < 0.05) lastRamValue += (Math.random() - 0.5) * 5;
-                lastRamValue = Math.max(20, Math.min(80, lastRamValue)); // Clamp
+                lastRamValue = Math.max(20, Math.min(80, lastRamValue)); 
                 ramData.push(lastRamValue);
                 if (ramData.length > ramCanvas.width) ramData.shift();
                 ramLabel.textContent = `${Math.round(lastRamValue)}%`;
                 
                 const accentColor = getComputedStyle(document.documentElement).getPropertyValue('--royal-gold').trim();
                 drawGraph(cpuCtx, cpuCanvas, cpuData, accentColor);
-                drawGraph(ramCtx, ramCanvas, ramData, '#27c93f'); // Use a different color for RAM
+                drawGraph(ramCtx, ramCanvas, ramData, '#27c93f');
             }
 
             const mutationObserver = new MutationObserver(() => {
@@ -2595,11 +2574,11 @@
         }
         initializeSystemMonitor();
 
-        // --- Weather Widget ---
+
         async function initWeather() {
             const widget = document.getElementById('weather-widget');
             try {
-                // Using Open-Meteo API (No key required) - Defaulting to London for demo
+     
                 const res = await fetch('https://api.open-meteo.com/v1/forecast?latitude=51.5074&longitude=-0.1278&current_weather=true');
                 const data = await res.json();
                 const temp = Math.round(data.current_weather.temperature);
@@ -2618,9 +2597,7 @@
             }
         }
         initWeather();
-        setInterval(initWeather, 600000); // Update every 10 minutes
-
-        // --- Volume Control Logic ---
+        setInterval(initWeather, 600000); 
         const volumeIcon = document.getElementById('volume-icon');
         const volumeSliderContainer = document.getElementById('volume-slider-container');
         const volumeSlider = document.getElementById('volume-slider');
@@ -2664,7 +2641,6 @@
 
         brightnessSlider.addEventListener('input', (e) => {
             const brightness = parseInt(e.target.value);
-            // Map brightness (0-100) to opacity (0.7-0). 100 brightness = 0 opacity.
             const opacity = (100 - brightness) * 0.007;
             brightnessOverlay.style.opacity = opacity;
 
@@ -2678,18 +2654,16 @@
             localStorage.setItem('knightos-brightness', brightness);
         });
 
-        // Load saved volume on startup
         const savedVolume = localStorage.getItem('knightos-volume') || '75';
         volumeSlider.value = savedVolume;
-        // Trigger input event to set the correct icon on load
+        
         volumeSlider.dispatchEvent(new Event('input'));
 
-        // Load saved brightness on startup
         const savedBrightness = localStorage.getItem('knightos-brightness') || '100';
         brightnessSlider.value = savedBrightness;
         brightnessSlider.dispatchEvent(new Event('input'));
 
-        // --- Settings Window Logic ---
+   
         const animationToggle = document.getElementById('animation-toggle');
         const themeDarkRadio = document.getElementById('theme-dark');
         const themeLightRadio = document.getElementById('theme-light');
@@ -2710,7 +2684,7 @@
             if (animationFrameId) {
                 cancelAnimationFrame(animationFrameId);
             }
-            // Clear canvas to background color after a short delay to ensure theme is set
+         
             setTimeout(() => {
                 const bgColor = getComputedStyle(document.body).getPropertyValue('--obsidian').trim();
                 ctx.fillStyle = bgColor;
@@ -2718,15 +2692,15 @@
             }, 50);
         }
 
-        // Theme Radio Buttons
+   
         themeDarkRadio.addEventListener('click', () => setTheme('dark'));
         themeLightRadio.addEventListener('click', () => setTheme('light'));
 
-        // Animation Style Radio Buttons
+     
         function setAnimationStyle(style) {
             currentAnimationType = style;
             localStorage.setItem('knightos-animation-style', style);
-            // Clear canvas to prevent artifacts when switching
+         
             const bgColor = getComputedStyle(document.body).getPropertyValue('--obsidian').trim();
             ctx.fillStyle = bgColor;
             ctx.fillRect(0, 0, width, height);
@@ -2734,7 +2708,7 @@
         animSingularityRadio.addEventListener('click', () => setAnimationStyle('singularity'));
         animStarfieldRadio.addEventListener('click', () => setAnimationStyle('starfield'));
 
-        // Animation Toggle
+       
         animationToggle.addEventListener('change', (e) => {
             const isEnabled = e.target.checked;
             if (isEnabled) {
@@ -2745,7 +2719,7 @@
             localStorage.setItem('knightos-animation-enabled', isEnabled);
         });
 
-        // Accent Color Logic
+       
         function hexToRgb(hex) {
             const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
             return result ? {
@@ -2774,20 +2748,18 @@
         });
 
         resetAccentBtn.addEventListener('click', () => {
-            setAccentColor('#C5A059'); // Default Royal Gold
+            setAccentColor('#C5A059');
         });
 
-        // Load saved accent color
         const savedAccent = localStorage.getItem('knightos-accent-color');
         if (savedAccent) setAccentColor(savedAccent);
 
-        // --- Theme Toggle ---
         const themeToggle = document.getElementById('theme-toggle');
         function setTheme(theme) {
             document.body.dataset.theme = theme;
             themeToggle.textContent = theme === 'light' ? '🌙' : '☀️';
             localStorage.setItem('knightos-theme', theme);
-            updateSingularityColors(); // Update animation color
+            updateSingularityColors(); 
             if (document.getElementById('theme-' + theme)) {
                 document.getElementById('theme-' + theme).checked = true;
             }
@@ -2799,11 +2771,11 @@
             setTheme(newTheme);
         });
 
-        // Load saved theme and apply initial animation color
+       
         const savedTheme = localStorage.getItem('knightos-theme') || 'dark';
         setTheme(savedTheme);
 
-        // Load saved animation style
+        
         const savedAnimStyle = localStorage.getItem('knightos-animation-style') || 'singularity';
         setAnimationStyle(savedAnimStyle);
         if (savedAnimStyle === 'singularity') {
@@ -2812,9 +2784,9 @@
             animStarfieldRadio.checked = true;
         }
 
-        // Load saved animation preference and start/stop animation
+       
         const savedAnimationPref = localStorage.getItem('knightos-animation-enabled');
-        const shouldAnimate = savedAnimationPref !== 'false'; // Default to true
+        const shouldAnimate = savedAnimationPref !== 'false'; 
         animationToggle.checked = shouldAnimate;
         if (shouldAnimate) {
             startAnimation();
@@ -2822,10 +2794,9 @@
             stopAnimation();
         }
 
-        // --- App Manager ---
+       
         const appManager = {
             init: function() {
-                // Desktop Icons
                 const desktopIcons = document.querySelectorAll('.desktop-icon');
                 desktopIcons.forEach(icon => {
                     const windowId = icon.dataset.opens;
@@ -2838,7 +2809,7 @@
                     });
                 });
 
-                // Dock Icons
+               
                 const dockIcons = document.querySelectorAll('.dock-icon');
                 dockIcons.forEach(icon => {
                     const windowId = icon.dataset.opens;
@@ -2847,7 +2818,7 @@
                     });
                 });
 
-                // Menu Items
+                
                 const menuItems = document.querySelectorAll('.menu-item[data-opens]');
                 menuItems.forEach(item => {
                     const windowId = item.dataset.opens;
@@ -2857,8 +2828,6 @@
                         menuOpen = false;
                     });
                 });
-
-                // Window Controls (min, max, close)
                 const closeButtons = document.querySelectorAll('.win-btn.close');
                 closeButtons.forEach(button => {
                     button.addEventListener('click', (e) => {
@@ -2897,7 +2866,6 @@
                     });
                 });
 
-                // Desktop click to deselect
                 document.body.addEventListener('click', (e) => {
                     if (!e.target.closest('.desktop-icon')) {
                         this.deselectAllIcons();
